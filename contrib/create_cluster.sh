@@ -10,5 +10,13 @@ kind create cluster --wait 5m --image kindest/node:${KUBE_VERSION} --name "$DEVE
 echo ">>> Waiting for CoreDNS"
 kubectl --context "kind-$DEVENV" -n kube-system rollout status deployment/coredns
 
-echo ">>>> Dump Coredns logs"
-kubectl --context "kind-$DEVENV" -n kube-system logs deploy/coredns 
+
+echo ">>> Descibe CoreDNS"
+kubectl --context "kind-$DEVENV" -n kube-system describe deploy/coredns
+
+
+echo ">>>> Get Pods in kube-system"
+kubectl --context "kind-$DEVENV" -n kube-system get pods
+
+echo ">>>> Get logs of coredns"
+kubectl --context "kind-$DEVENV" -n kube-system logs -l k8s-app=kube-dns
