@@ -11,9 +11,11 @@ echo ">>> Waiting for CoreDNS"
 kubectl --context "kind-$DEVENV" -n kube-system rollout status deployment/coredns
 
 
-echo ">>> Descibe CoreDNS"
+echo ">>> Descibe CoreDNS Deploy"
 kubectl --context "kind-$DEVENV" -n kube-system describe deploy/coredns
 
+echo ">>> Descibe CoreDNS Pods"
+kubectl --context "kind-$DEVENV" -n kube-system describe pod -l k8s-app=kube-dns
 
 echo ">>>> Get Pods in kube-system"
 kubectl --context "kind-$DEVENV" -n kube-system get pods
