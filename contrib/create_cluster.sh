@@ -5,9 +5,10 @@ KUBE_VERSION=v1.18.8
 
 echo ">>> Creating Kubernetes ${KUBE_VERSION} cluster ${DEVENV}"
 
-kind create cluster --image kindest/node:${KUBE_VERSION} --name "$DEVENV" -v 5
+kind create cluster --wait 5m --image kindest/node:${KUBE_VERSION} --name "$DEVENV" -v 1
 
-echo ">>> Get overall cluster health"
-kubectl --context "kind-$DEVENV" cluster-info dump
 echo ">>> Waiting for CoreDNS"
 kubectl --context "kind-$DEVENV" -n kube-system rollout status deployment/coredns
+
+echo ">>>> Dump Coredns logs"
+kubectl --context "kind-$DEVENV" -n kube-system logs deploy/coredns 
